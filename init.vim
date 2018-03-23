@@ -4,18 +4,14 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'yggdroot/indentline'
   Plug 'tpope/vim-commentary'
 
-  " Cambiar comillas
   Plug 'tpope/vim-surround'
 
-  " Rails
   Plug 'tpope/vim-rails'
   Plug 'kchmck/vim-coffee-script'
   Plug 'vim-ruby/vim-ruby'
 
-  " Git
   Plug 'tpope/vim-fugitive'
 
-  "Tagbar
   Plug 'majutsushi/tagbar'
 
   " Theme
@@ -28,34 +24,27 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
   Plug 'rakr/vim-one'
 
-  " Identifica si se realizacon cambios en el documentos
   Plug 'airblade/vim-gitgutter'
-  " Buscar metodos
   Plug 'dyng/ctrlsf.vim'
 
-  " Detecta los tab y espacios en blanco y los transforma
   Plug 'tpope/vim-sleuth'
 
-  " Ordena trozo de codigo
   Plug 'junegunn/vim-easy-align'
 
-  " Completa cuando escribes metodos, def end, if else end, etc
   Plug 'tpope/vim-endwise'
-  " Repetir accion con .
   Plug 'tpope/vim-repeat'
 
   Plug 'kien/ctrlp.vim'
 
-  " Procesos asincronos
   Plug 'w0rp/ale'
   Plug 'tpope/vim-sensible'
 
   Plug 'posva/vim-vue'
 
-  " Autocompleate
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
+let g:deoplete#enable_at_startup = 1
 " ############# MAP #################
 let mapleader = "\<Space>"
 nnoremap <Leader>w :w<CR>
@@ -119,3 +108,7 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" bind K to grep word under cursor
+noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
