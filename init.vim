@@ -1,18 +1,27 @@
 call plug#begin('~/.vimrc/plugged')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'yggdroot/indentline'
   Plug 'tpope/vim-commentary'
-
+  Plug 'scrooloose/nerdtree'
   Plug 'tpope/vim-surround'
-
+  Plug 'wakatime/vim-wakatime'
   Plug 'tpope/vim-rails'
   Plug 'kchmck/vim-coffee-script'
   Plug 'vim-ruby/vim-ruby'
-
   Plug 'tpope/vim-fugitive'
-
   Plug 'majutsushi/tagbar'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'dyng/ctrlsf.vim'
+  Plug 'tpope/vim-sleuth'
+  Plug 'junegunn/vim-easy-align'
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-repeat'
+  Plug 'kien/ctrlp.vim'
+  Plug 'w0rp/ale'
+  Plug 'tpope/vim-sensible'
+  Plug 'posva/vim-vue'
 
   " Theme
   Plug 'morhetz/gruvbox'
@@ -22,31 +31,12 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'ajmwagar/vim-dues'
   Plug 'joshdick/onedark.vim'
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
+  Plug 'dracula/vim'
   Plug 'rakr/vim-one'
-
-  Plug 'airblade/vim-gitgutter'
-  Plug 'dyng/ctrlsf.vim'
-
-  Plug 'tpope/vim-sleuth'
-
-  Plug 'junegunn/vim-easy-align'
-
-  Plug 'tpope/vim-endwise'
-  Plug 'tpope/vim-repeat'
-
-  Plug 'kien/ctrlp.vim'
-
-  Plug 'w0rp/ale'
-  Plug 'tpope/vim-sensible'
-
-  Plug 'posva/vim-vue'
-
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
-" ############# MAP #################
 let mapleader = "\<Space>"
+
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>o :only<CR>
@@ -59,19 +49,17 @@ syntax on
 filetype plugin indent on
 nmap <silent> <BS> :nohlsearch<CR>
 
+" switch between current and last buffer
+nmap <leader><tab> <c-^>
+
 "Easy align config
 vmap <Enter> <Plug>(EasyAlign)
 
-" colorscheme  solarized8_dark_low
-" set background=dark
-
-set background=dark
 colorscheme gruvbox
+" set background=dark
+" colorscheme solarized8_dark
+" background solarized8_dark
 
-set clipboard=unnamed " copy to system clipboard
-
-" switch between current and last buffer
-nmap <leader><tab> <c-^>
 
 function! s:fzf_statusline()
   " Override statusline as you like
@@ -95,6 +83,11 @@ set expandtab      " Use spaces instead of tags
 set list           " Show invisible characters
 set lazyredraw
 set ttyfast
+set number
+set textwidth=100
+set colorcolumn=+1
+set background=dark
+set clipboard=unnamed " copy to system clipboard
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
@@ -112,3 +105,12 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " bind K to grep word under cursor
 noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
+
+" NERDtree
+map <silent><leader>n :NERDTreeToggle<CR>
+map <silent><leader>- :NERDTreeFind<cr>
+let NERDTreeShowHidden=0
+let g:nerdtree_tabs_focus_on_files = 1
+let g:NERDTreeWinSize = 30
+let g:NERDTreeQuitOnOpen=0
+let NERDTreeMinimalUI = 1
