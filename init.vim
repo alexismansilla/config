@@ -22,6 +22,7 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'w0rp/ale'
   Plug 'tpope/vim-sensible'
   Plug 'posva/vim-vue'
+  Plug 'fvictorio/vim-extract-variable'
 
   " Theme
   Plug 'morhetz/gruvbox'
@@ -88,6 +89,7 @@ set textwidth=100
 set colorcolumn=+1
 set background=dark
 set clipboard=unnamed " copy to system clipboard
+set noswapfile
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
