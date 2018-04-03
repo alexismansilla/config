@@ -103,8 +103,16 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" bind K to grep word under cursor
+" The Silver Searcher
+" https://robots.thoughtbot.com/faster-grepping-in-vim
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
 noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
+nnoremap \ :Ag<SPACE>
 
 " NERDtree
 map <silent><leader>n :NERDTreeToggle<CR>
