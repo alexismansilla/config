@@ -1,5 +1,10 @@
 call plug#begin('~/.vimrc/plugged')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'wokalski/autocomplete-flow'
+  " https://github.com/wokalski/autocomplete-flow
+  Plug 'Shougo/neosnippet'
+  Plug 'Shougo/neosnippet-snippets'
+
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'yggdroot/indentline'
@@ -46,6 +51,7 @@ let g:airline_theme='materialmonokai'
 let g:materialmonokai_subtle_airline=1
 
 let g:deoplete#enable_at_startup = 1
+let g:neosnippet#enable_completed_snippet = 1
 " colorscheme gruvbox
 " set background=dark
 " colorscheme solarized8_dark
