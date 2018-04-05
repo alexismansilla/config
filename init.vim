@@ -34,7 +34,23 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
   Plug 'dracula/vim'
   Plug 'rakr/vim-one'
+  Plug 'skielbasa/vim-material-monokai'
 call plug#end()
+
+set background=dark
+set termguicolors
+colorscheme material-monokai
+let g:materialmonokai_italic=1
+let g:materialmonokai_subtle_spell=1
+let g:airline_theme='materialmonokai'
+let g:materialmonokai_subtle_airline=1
+
+let g:deoplete#enable_at_startup = 1
+" colorscheme gruvbox
+" set background=dark
+" colorscheme solarized8_dark
+" background solarized8_dark
+
 
 let mapleader = "\<Space>"
 
@@ -55,11 +71,6 @@ nmap <leader><tab> <c-^>
 
 "Easy align config
 vmap <Enter> <Plug>(EasyAlign)
-
-colorscheme gruvbox
-" set background=dark
-" colorscheme solarized8_dark
-" background solarized8_dark
 
 
 function! s:fzf_statusline()
@@ -118,7 +129,8 @@ nnoremap \ :Ag<SPACE>
 
 " NERDtree
 map <silent><leader>n :NERDTreeToggle<CR>
-map <silent><leader>- :NERDTreeFind<cr>
+map <silent><leader>m :NERDTreeFind<cr>
+
 let NERDTreeShowHidden=0
 let g:nerdtree_tabs_focus_on_files = 1
 let g:NERDTreeWinSize = 30
