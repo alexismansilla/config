@@ -18,7 +18,6 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'majutsushi/tagbar'
   Plug 'airblade/vim-gitgutter'
-  Plug 'dyng/ctrlsf.vim'
   Plug 'tpope/vim-sleuth'
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-endwise'
@@ -28,8 +27,17 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'tpope/vim-sensible'
   Plug 'posva/vim-vue'
   Plug 'fvictorio/vim-extract-variable'
+  Plug 'vimwiki/vimwiki'
+  Plug 'itchyny/vim-cursorword'
+  Plug 'matze/vim-move'
+  Plug 'tpope/vim-haml'
+  Plug 'dhruvasagar/vim-open-url'
+  Plug 'rizzatti/dash.vim'
+  Plug 'dkprice/vim-easygrep'
+  Plug 'dyng/ctrlsf.vim'
 
   " Theme
+  Plug 'drewtempelmeyer/palenight.vim'
   Plug 'morhetz/gruvbox'
   Plug 'lifepillar/vim-solarized8'
   Plug 'mhartington/oceanic-next'
@@ -45,19 +53,22 @@ call plug#end()
 set background=dark
 set termguicolors
 colorscheme material-monokai
+
+" set background=dark
+" colorscheme palenight
+
 let g:materialmonokai_italic=1
 let g:materialmonokai_subtle_spell=1
 let g:airline_theme='materialmonokai'
 let g:materialmonokai_subtle_airline=1
-
 let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
+let g:move_key_modifier = 'C'
 " colorscheme gruvbox
 " set background=dark
 " colorscheme solarized8_dark
 " background solarized8_dark
-
-
+"
 let mapleader = "\<Space>"
 
 nnoremap <Leader>w :w<CR>
@@ -86,6 +97,8 @@ function! s:fzf_statusline()
   highlight fzf3 ctermfg=237 ctermbg=251
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
+
+vmap     <Leader>f <Plug>CtrlSFVwordExec
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 map <C-P> :FZF<CR>
@@ -121,6 +134,16 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+function! RubocopAutocorrect()
+  execute "!rubocop -a " . bufname("%")
+endfunction
+
+map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
+
+nnoremap gA :OpenURL http://www.answers.com/search?q=<cword><CR>
+
+:nmap <silent> <leader>d <Plug>DashSearch
 
 " The Silver Searcher
 " https://robots.thoughtbot.com/faster-grepping-in-vim
