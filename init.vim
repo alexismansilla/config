@@ -40,9 +40,9 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'szw/vim-g'
 
   " Theme
+  Plug 'icymind/NeoSolarized'
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'morhetz/gruvbox'
-  Plug 'lifepillar/vim-solarized8'
   Plug 'mhartington/oceanic-next'
   Plug 'bling/vim-airline'
   Plug 'ajmwagar/vim-dues'
@@ -62,7 +62,7 @@ set hlsearch
 set ignorecase
 set smartcase
 
-set background=light
+set background=dark
 set termguicolors
 
 " Gruvbox
@@ -78,10 +78,9 @@ set termguicolors
 " let g:materialmonokai_subtle_airline=1
 
 " Solarized
-" colorscheme solarized8_dark
-colorscheme solarized8_low
-let g:solarized_statusline = 'low'
-let g:solarized_old_cursor_style = '1'
+colorscheme NeoSolarized
+let g:neosolarized_contrast = "high"
+let g:neosolarized_vertSplitBgTrans = 1
 
 let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
