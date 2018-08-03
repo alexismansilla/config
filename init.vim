@@ -36,6 +36,9 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'dkprice/vim-easygrep'
   Plug 'dyng/ctrlsf.vim'
 
+  " Test
+  Plug 'szw/vim-g'
+
   " Theme
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'morhetz/gruvbox'
@@ -50,26 +53,39 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'skielbasa/vim-material-monokai'
 call plug#end()
 
-set background=dark
+let mapleader = "\<Space>"
+
+set shell=zsh
+
+" Search options
+set hlsearch
+set ignorecase
+set smartcase
+
+set background=light
 set termguicolors
-colorscheme material-monokai
 
-" set background=dark
-" colorscheme palenight
+" Gruvbox
+" colorscheme gruvbox
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_italicize_comments = 1
 
-let g:materialmonokai_italic=1
-let g:materialmonokai_subtle_spell=1
-let g:airline_theme='materialmonokai'
-let g:materialmonokai_subtle_airline=1
+" Material-Monokai
+" colorscheme material-monokai
+" let g:materialmonokai_italic=1
+" let g:materialmonokai_subtle_spell=1
+" let g:airline_theme='materialmonokai'
+" let g:materialmonokai_subtle_airline=1
+
+" Solarized
+" colorscheme solarized8_dark
+colorscheme solarized8_low
+let g:solarized_statusline = 'low'
+let g:solarized_old_cursor_style = '1'
+
 let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
 let g:move_key_modifier = 'C'
-" colorscheme gruvbox
-" set background=dark
-" colorscheme solarized8_dark
-" background solarized8_dark
-"
-let mapleader = "\<Space>"
 
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
@@ -88,7 +104,6 @@ nmap <leader><tab> <c-^>
 
 "Easy align config
 vmap <Enter> <Plug>(EasyAlign)
-
 
 function! s:fzf_statusline()
   " Override statusline as you like
@@ -117,7 +132,6 @@ set ttyfast
 set number
 set textwidth=100
 set colorcolumn=+1
-set background=dark
 set clipboard=unnamed " copy to system clipboard
 set noswapfile
 
@@ -141,8 +155,6 @@ endfunction
 
 map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
 
-nnoremap gA :OpenURL http://www.answers.com/search?q=<cword><CR>
-
 :nmap <silent> <leader>d <Plug>DashSearch
 
 " The Silver Searcher
@@ -160,8 +172,11 @@ nnoremap \ :Ag<SPACE>
 map <silent><leader>n :NERDTreeToggle<CR>
 map <silent><leader>m :NERDTreeFind<cr>
 
+let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=0
 let g:nerdtree_tabs_focus_on_files = 1
 let g:NERDTreeWinSize = 30
 let g:NERDTreeQuitOnOpen=0
 let NERDTreeMinimalUI = 1
+
+let g:vim_g_command = "G"
