@@ -35,11 +35,14 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'rizzatti/dash.vim'
   Plug 'dkprice/vim-easygrep'
   Plug 'dyng/ctrlsf.vim'
+  Plug 'ervandew/supertab'
 
   " Test
   Plug 'szw/vim-g'
+  Plug 'ruanyl/vim-gh-line'
 
   " Theme
+  Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'icymind/NeoSolarized'
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'morhetz/gruvbox'
@@ -48,77 +51,60 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'ajmwagar/vim-dues'
   Plug 'joshdick/onedark.vim'
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
-  Plug 'dracula/vim'
   Plug 'rakr/vim-one'
   Plug 'skielbasa/vim-material-monokai'
 call plug#end()
-
-let mapleader = "\<Space>"
-
-set shell=zsh
 
 " Search options
 set hlsearch
 set ignorecase
 set smartcase
 
-set background=dark
-set termguicolors
+let g:ctrlp_map = '<c-f>'
+let g:ctrlp_cmd = 'CtrlP'
 
-" Gruvbox
-" colorscheme gruvbox
-" let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_italicize_comments = 1
-
-" Material-Monokai
-" colorscheme material-monokai
-" let g:materialmonokai_italic=1
-" let g:materialmonokai_subtle_spell=1
-" let g:airline_theme='materialmonokai'
-" let g:materialmonokai_subtle_airline=1
-
-" Solarized
-colorscheme NeoSolarized
-let g:neosolarized_contrast = "high"
-let g:neosolarized_vertSplitBgTrans = 1
-
-let g:deoplete#enable_at_startup = 1
-let g:neosnippet#enable_completed_snippet = 1
-let g:move_key_modifier = 'C'
-
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
-nnoremap <Leader>o :only<CR>
-nnoremap <CR> G
-nnoremap <BS> gg
-vnoremap < <gv
-vnoremap > >gv
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
-syntax on
 filetype plugin indent on
 nmap <silent> <BS> :nohlsearch<CR>
 
 " switch between current and last buffer
 nmap <leader><tab> <c-^>
-
-"Easy align config
 vmap <Enter> <Plug>(EasyAlign)
 
 function! s:fzf_statusline()
-  " Override statusline as you like
   highlight fzf1 ctermfg=161 ctermbg=251
   highlight fzf2 ctermfg=23 ctermbg=251
   highlight fzf3 ctermfg=237 ctermbg=251
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 
-vmap     <Leader>f <Plug>CtrlSFVwordExec
+vmap <Leader>f <Plug>CtrlSFVwordExec
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 map <C-P> :FZF<CR>
 map <Leader>b :Buffers <CR>
 map <Leader>h :History <CR>
 
+
+
+" The Silver Searcher
+" https://robots.thoughtbot.com/faster-grepping-in-vim
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
+nnoremap \ :Ag<SPACE>
+
+"
+" Main configuration
+"
+" ------------------------------------------|
+let mapleader = "\<Space>"
+
+set shell=zsh
 set laststatus=2
 set nowrap         " don't wrap lines
 set tabstop=2      " a tab is two spaces
@@ -132,9 +118,31 @@ set number
 set textwidth=100
 set colorcolumn=+1
 set clipboard=unnamed " copy to system clipboard
-set noswapfile
 
+syntax on
+
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>o :only<CR>
+nnoremap <CR> G
+nnoremap <BS> gg
+vnoremap < <gv
+vnoremap > >gv
+" ------------------------------------------|
+
+
+"
+" Dash integration
+"
+" ------------------------------------------|
+:nmap <silent> <leader>d <Plug>DashSearch
+" ------------------------------------------|
+
+
+"
 " Strip trailing whitespace
+"
+" ------------------------------------------|
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -147,35 +155,75 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+" ------------------------------------------|
 
+
+"
+" NERDtree
+"
+" ------------------------------------------|
+map <silent><leader>n :NERDTreeToggle<CR>
+map <silent><leader>m :NERDTreeFind<cr>
+
+let g:NERDTreeWinPos     = "right"
+let NERDTreeShowHidden   = 0
+let g:NERDTreeWinSize    = 30
+let g:NERDTreeQuitOnOpen = 0
+let NERDTreeMinimalUI    = 1
+let g:vim_g_command      = "G"
+let g:nerdtree_tabs_focus_on_files = 1
+" ------------------------------------------|
+
+
+"
+" Rubocop
+"
+" ------------------------------------------|
 function! RubocopAutocorrect()
   execute "!rubocop -a " . bufname("%")
 endfunction
 
 map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
+" ------------------------------------------|
 
-:nmap <silent> <leader>d <Plug>DashSearch
 
-" The Silver Searcher
-" https://robots.thoughtbot.com/faster-grepping-in-vim
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor\ --column
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
+set background=dark
+set termguicolors
+"
+" Themes
+"
+" ------------------------------------------|
+" Gruvbox
+"
+" colorscheme gruvbox
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_italicize_comments = 1
 
-noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
-nnoremap \ :Ag<SPACE>
+" Material-Monokai
+"
+" colorscheme material-monokai
 
-" NERDtree
-map <silent><leader>n :NERDTreeToggle<CR>
-map <silent><leader>m :NERDTreeFind<cr>
+" let g:materialmonokai_italic         = 1
+" let g:materialmonokai_subtle_spell   = 1
+" let g:airline_theme                  = 'materialmonokai'
+" let g:materialmonokai_subtle_airline = 1
 
-let g:NERDTreeWinPos = "right"
-let NERDTreeShowHidden=0
-let g:nerdtree_tabs_focus_on_files = 1
-let g:NERDTreeWinSize = 30
-let g:NERDTreeQuitOnOpen=0
-let NERDTreeMinimalUI = 1
+" Solarized
+"
+" colorscheme NeoSolarized
 
-let g:vim_g_command = "G"
+" let g:neosolarized_contrast               = "dark"
+" let g:neosolarized_vertSplitBgTrans       = 1
+
+" let g:deoplete#enable_at_startup          = 1
+" let g:neosnippet#enable_completed_snippet = 1
+" let g:move_key_modifier                   = 'C'
+
+" Quantum
+"
+colorscheme quantum
+let g:quantum_black   = 1
+let g:quantum_italics = 1
+let g:airline_theme   = 'quantum'
+
+" ------------------------------------------|
