@@ -55,14 +55,6 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'skielbasa/vim-material-monokai'
 call plug#end()
 
-" Search options
-set hlsearch
-set ignorecase
-set smartcase
-
-let g:ctrlp_map = '<c-f>'
-let g:ctrlp_cmd = 'CtrlP'
-
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 filetype plugin indent on
 nmap <silent> <BS> :nohlsearch<CR>
@@ -70,33 +62,6 @@ nmap <silent> <BS> :nohlsearch<CR>
 " switch between current and last buffer
 nmap <leader><tab> <c-^>
 vmap <Enter> <Plug>(EasyAlign)
-
-function! s:fzf_statusline()
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-
-vmap <Leader>f <Plug>CtrlSFVwordExec
-
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
-map <C-P> :FZF<CR>
-map <Leader>b :Buffers <CR>
-map <Leader>h :History <CR>
-
-
-
-" The Silver Searcher
-" https://robots.thoughtbot.com/faster-grepping-in-vim
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor\ --column
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
-nnoremap \ :Ag<SPACE>
 
 "
 " Main configuration
@@ -118,6 +83,9 @@ set number
 set textwidth=100
 set colorcolumn=+1
 set clipboard=unnamed " copy to system clipboard
+set hlsearch
+set ignorecase
+set smartcase
 
 syntax on
 
@@ -128,6 +96,54 @@ nnoremap <CR> G
 nnoremap <BS> gg
 vnoremap < <gv
 vnoremap > >gv
+" ------------------------------------------|
+
+
+"
+" CtrlP (new mapping)
+"
+" ------------------------------------------|
+let g:ctrlp_map = '<c-f>'
+let g:ctrlp_cmd = 'CtrlP'
+" ------------------------------------------|
+
+" Fzf
+"
+" ------------------------------------------|
+function! s:fzf_statusline()
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+map <C-P> :FZF<CR>
+map <Leader>b :Buffers <CR>
+map <Leader>h :History <CR>
+" ------------------------------------------|
+
+"
+" The Silver Searcher
+" https://robots.thoughtbot.com/faster-grepping-in-vim
+"
+" ------------------------------------------|
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+noremap K :Ag! <C-r>=expand('<cword>')<CR><CR>
+nnoremap \ :Ag<SPACE>
+" ------------------------------------------|
+
+
+"
+" CtrlSF Global Word Search
+"
+" ------------------------------------------|
+vmap <Leader>f <Plug>CtrlSFVwordExec
 " ------------------------------------------|
 
 
