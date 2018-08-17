@@ -57,10 +57,10 @@ call plug#end()
 
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 filetype plugin indent on
-nmap <silent> <BS> :nohlsearch<CR>
 
 " switch between current and last buffer
 nmap <leader><tab> <c-^>
+
 vmap <Enter> <Plug>(EasyAlign)
 
 "
@@ -86,6 +86,7 @@ set clipboard=unnamed " copy to system clipboard
 set hlsearch
 set ignorecase
 set smartcase
+set noswapfile
 
 syntax on
 
@@ -144,6 +145,7 @@ nnoremap \ :Ag<SPACE>
 "
 " ------------------------------------------|
 vmap <Leader>f <Plug>CtrlSFVwordExec
+nmap <silent> <BS> :nohlsearch<CR>
 " ------------------------------------------|
 
 
@@ -217,12 +219,11 @@ set termguicolors
 
 " Material-Monokai
 "
-" colorscheme material-monokai
-
-" let g:materialmonokai_italic         = 1
-" let g:materialmonokai_subtle_spell   = 1
-" let g:airline_theme                  = 'materialmonokai'
-" let g:materialmonokai_subtle_airline = 1
+colorscheme material-monokai
+let g:materialmonokai_italic         = 1
+let g:materialmonokai_subtle_spell   = 1
+let g:airline_theme                  = 'materialmonokai'
+let g:materialmonokai_subtle_airline = 1
 
 " Solarized
 "
@@ -237,9 +238,9 @@ set termguicolors
 
 " Quantum
 "
-colorscheme quantum
-let g:quantum_black   = 1
-let g:quantum_italics = 1
-let g:airline_theme   = 'quantum'
+" let g:quantum_black=1
+" colorscheme quantum
+" let g:quantum_italics = 1
+" let g:airline_theme   = 'quantum'
 
 " ------------------------------------------|
