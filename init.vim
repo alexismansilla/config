@@ -1,7 +1,6 @@
 call plug#begin('~/.vimrc/plugged')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'wokalski/autocomplete-flow'
-  " https://github.com/wokalski/autocomplete-flow
   Plug 'Shougo/neosnippet'
   Plug 'Shougo/neosnippet-snippets'
 
@@ -13,36 +12,26 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'tpope/vim-surround'
   Plug 'wakatime/vim-wakatime'
   Plug 'tpope/vim-rails'
-  Plug 'kchmck/vim-coffee-script'
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
-  Plug 'majutsushi/tagbar'
   Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-sleuth'
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-repeat'
   Plug 'kien/ctrlp.vim'
   Plug 'w0rp/ale'
   Plug 'tpope/vim-sensible'
-  Plug 'posva/vim-vue'
-  Plug 'fvictorio/vim-extract-variable'
-  Plug 'vimwiki/vimwiki'
   Plug 'itchyny/vim-cursorword'
-  Plug 'matze/vim-move'
-  Plug 'tpope/vim-haml'
   Plug 'dhruvasagar/vim-open-url'
+  Plug 'fvictorio/vim-extract-variable'
   Plug 'rizzatti/dash.vim'
-  Plug 'dkprice/vim-easygrep'
   Plug 'dyng/ctrlsf.vim'
   Plug 'ervandew/supertab'
-
-  " Test
+  Plug 'vimwiki/vimwiki'
   Plug 'szw/vim-g'
   Plug 'ruanyl/vim-gh-line'
 
   " Theme
-  Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'icymind/NeoSolarized'
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'morhetz/gruvbox'
@@ -58,8 +47,6 @@ call plug#end()
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 filetype plugin indent on
 
-" switch between current and last buffer
-nmap <leader><tab> <c-^>
 
 vmap <Enter> <Plug>(EasyAlign)
 
@@ -205,6 +192,15 @@ map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
 " ------------------------------------------|
 
 
+
+"
+" switch between current and last buffer
+"
+" ------------------------------------------|
+nmap <leader><tab> <c-^>
+" ------------------------------------------|
+
+
 set background=dark
 set termguicolors
 "
@@ -235,12 +231,6 @@ let g:materialmonokai_subtle_airline = 1
 " let g:deoplete#enable_at_startup          = 1
 " let g:neosnippet#enable_completed_snippet = 1
 " let g:move_key_modifier                   = 'C'
-
-" Quantum
-"
-" let g:quantum_black=1
-" colorscheme quantum
-" let g:quantum_italics = 1
-" let g:airline_theme   = 'quantum'
-
 " ------------------------------------------|
+"
+
