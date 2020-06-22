@@ -7,14 +7,12 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'yggdroot/indentline'
-  Plug 'tpope/vim-commentary'
   Plug 'scrooloose/nerdtree'
   Plug 'tpope/vim-surround'
-  Plug 'wakatime/vim-wakatime'
+  Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-rails'
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
-  Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-repeat'
@@ -22,7 +20,7 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'w0rp/ale'
   Plug 'tpope/vim-sensible'
   Plug 'itchyny/vim-cursorword'
-  Plug 'dhruvasagar/vim-open-url'
+
   Plug 'fvictorio/vim-extract-variable'
   Plug 'rizzatti/dash.vim'
   Plug 'dyng/ctrlsf.vim'
@@ -30,18 +28,25 @@ call plug#begin('~/.vimrc/plugged')
   Plug 'vimwiki/vimwiki'
   Plug 'szw/vim-g'
   Plug 'ruanyl/vim-gh-line'
+  Plug 'terryma/vim-multiple-cursors'
+
+  Plug 'janko/vim-test'
+
+  Plug 'kchmck/vim-coffee-script'
+  Plug 'mileszs/ack.vim'
 
   " Theme
+  Plug 'bling/vim-airline'
+  Plug 'patstockwell/vim-monokai-tasty'
   Plug 'icymind/NeoSolarized'
-  Plug 'drewtempelmeyer/palenight.vim'
   Plug 'morhetz/gruvbox'
   Plug 'mhartington/oceanic-next'
-  Plug 'bling/vim-airline'
-  Plug 'ajmwagar/vim-dues'
   Plug 'joshdick/onedark.vim'
-  Plug 'sonph/onehalf', {'rtp': 'vim/'}
   Plug 'rakr/vim-one'
   Plug 'skielbasa/vim-material-monokai'
+  Plug 'cormacrelf/vim-colors-github'
+  Plug 'dracula/vim', { 'as': 'dracula' }
+  Plug 'KeitaNakamura/neodark.vim'
 call plug#end()
 
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
@@ -50,6 +55,13 @@ filetype plugin indent on
 
 vmap <Enter> <Plug>(EasyAlign)
 
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
+
+let test#ruby#rspec#executable = 'rspecb'
 "
 " Main configuration
 "
@@ -74,6 +86,11 @@ set hlsearch
 set ignorecase
 set smartcase
 set noswapfile
+
+" Folder method
+" Select the block next zf for create a collapse
+set foldmethod=manual
+" Folder method
 
 syntax on
 
@@ -109,6 +126,7 @@ autocmd! User FzfStatusLine call <SID>fzf_statusline()
 map <C-P> :FZF<CR>
 map <Leader>b :Buffers <CR>
 map <Leader>h :History <CR>
+map <Leader>t :BTags <CR>
 " ------------------------------------------|
 
 "
@@ -161,8 +179,6 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 " ------------------------------------------|
-
-
 "
 " NERDtree
 "
@@ -192,6 +208,8 @@ map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
 " ------------------------------------------|
 
 
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+
 
 "
 " switch between current and last buffer
@@ -201,33 +219,59 @@ nmap <leader><tab> <c-^>
 " ------------------------------------------|
 
 
-set background=dark
+" set background=light
+" set background=dark
 set termguicolors
 "
 " Themes
 "
 " ------------------------------------------|
+" let g:airline_theme='one'
+" set background=light
+" let g:one_allow_italics = 1
+" colorscheme one
+
 " Gruvbox
-"
-" colorscheme gruvbox
-" let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+set termguicolors
+set background=dark
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark = 'hard'
 " let g:gruvbox_italicize_comments = 1
 
+" Dracula
+" color dracula
+
 " Material-Monokai
-"
-colorscheme material-monokai
-let g:materialmonokai_italic         = 1
-let g:materialmonokai_subtle_spell   = 1
-let g:airline_theme                  = 'materialmonokai'
-let g:materialmonokai_subtle_airline = 1
+" colorscheme material-monokai
+" let g:materialmonokai_italic         = 1
+" let g:materialmonokai_subtle_spell   = 1
+" let g:airline_theme                  = 'materialmonokai'
+" let g:materialmonokai_subtle_airline = 1
+
+" GitHub
+ " let g:github_colors_block_diffmark = 0
+ " let g:airline_theme = "github"
+ " let g:lightline = { 'colorscheme': 'github' }
+ " colorscheme github
+
+" Monokai
+" colorscheme vim-monokai-tasty
+" let g:vim_monokai_tasty_italic = 1
+" let g:airline_theme='monokai_tasty'
+
+" NeoDark
+" colorscheme neodark
+" let g:neodark#terminal_transparent = 1
+" let g:neodark#solid_vertsplit = 1
+" let g:lightline = {}
+" let g:lightline.colorscheme = 'neodark'
 
 " Solarized
-"
 " colorscheme NeoSolarized
-
-" let g:neosolarized_contrast               = "dark"
+" let g:neosolarized_contrast               = "light"
+" let g:neosrized_contrast               = "dark"
 " let g:neosolarized_vertSplitBgTrans       = 1
-
 " let g:deoplete#enable_at_startup          = 1
 " let g:neosnippet#enable_completed_snippet = 1
 " let g:move_key_modifier                   = 'C'
