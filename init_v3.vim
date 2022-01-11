@@ -22,7 +22,7 @@ set smartcase
 set noswapfile
 set mouse=nicr
 
-call plug#begin('~/.config/nvim/plugged') 
+call plug#begin('~/.config/nvim/plugged')
   " Tree
   Plug 'scrooloose/nerdtree'
 
@@ -39,12 +39,15 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'itchyny/vim-cursorword'
   Plug 'kien/ctrlp.vim'
   Plug 'elzr/vim-json'
+  Plug 'tpope/vim-fugitive'
+  Plug 'godlygeek/tabular'
+  Plug 'wakatime/vim-wakatime'
 
   " autocomplete
   Plug 'sirver/ultisnips'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-  " Theme 
+  " Theme
   Plug 'dracula/vim', { 'as': 'dracula' }
 
   " syntax
@@ -60,7 +63,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'terryma/vim-multiple-cursors'
 
   " Formatting/colors
-  Plug 'hail2u/vim-css3-syntax' 
+  Plug 'hail2u/vim-css3-syntax'
   Plug 'cakebaker/scss-syntax.vim'
   Plug 'pangloss/vim-javascript'
 call plug#end()
@@ -75,7 +78,7 @@ set cmdheight=1
 set nobackup
 set nowritebackup
 
-" System 
+" System
 nmap <leader><tab> <c-^>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
@@ -145,22 +148,18 @@ nmap <leader>,  <Plug>(coc-codeaction)
 nmap <leader>.  <Plug>(coc-fix-current)
 
 let g:coc_global_extensions = [
-      \ 'coc-snippets',
-      \ 'coc-pairs',
-      \ 'coc-tsserver',
-      \ 'coc-eslint',
-      \ 'coc-prettier',
-      \ 'coc-json',
-      \ 'coc-react-refactor',
-      \ ]
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint',
+  \ 'coc-prettier',
+  \ 'coc-json',
+  \ 'coc-react-refactor',
+  \ ]
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Show all diagnostics
 nnoremap <silent> <space>[  :<C-u>CocList diagnostics<cr>
@@ -173,5 +172,18 @@ autocmd FileType scss setl iskeyword+=@-@
 
 nmap <silent> <BS> :nohlsearch<CR>
 
+xmap <leader>b  <Plug>(coc-codeaction-selected)
 nmap <leader>b  <Plug>(coc-codeaction-selected)
-nmap <leader>b  <Plug>(coc-codeaction-selected)
+
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+
+function! RubocopAutocorrect()
+  execute "!rubocop -a" . bufname("%")
+endfunction
+
+map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
