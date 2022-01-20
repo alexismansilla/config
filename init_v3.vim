@@ -1,3 +1,4 @@
+execute pathogen#infect()
 syntax on
 
 let mapleader = " "
@@ -31,7 +32,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   " IDE
   Plug 'mileszs/ack.vim'
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf', { 'do': { -> zf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-endwise'
@@ -42,6 +43,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'godlygeek/tabular'
   Plug 'wakatime/vim-wakatime'
+  Plug 'ngmy/vim-rubocop'
 
   " autocomplete
   Plug 'sirver/ultisnips'
@@ -67,6 +69,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'cakebaker/scss-syntax.vim'
   Plug 'pangloss/vim-javascript'
 call plug#end()
+
 
 set termguicolors
 color dracula
@@ -172,8 +175,8 @@ autocmd FileType scss setl iskeyword+=@-@
 
 nmap <silent> <BS> :nohlsearch<CR>
 
-xmap <leader>b  <Plug>(coc-codeaction-selected)
-nmap <leader>b  <Plug>(coc-codeaction-selected)
+" xmap <leader>b  <Plug>(coc-codeaction-selected)
+" nmap <leader>b  <Plug>(coc-codeaction-selected)
 
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -183,7 +186,43 @@ if exists(":Tabularize")
 endif
 
 function! RubocopAutocorrect()
-  execute "!rubocop -a" . bufname("%")
+  execute "!rubocop -A " . bufname("%")
 endfunction
 
 map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
+
+" syntastic
+
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+" Skip to Model, View or Controller
+map <Leader>m :Emodel 
+map <Leader>v :Eview 
+map <Leader>c :Econtroller 
+
+
+" statusline
+"
+set statusline=
+set statusline+=%7*\[%n]                                  "buffernr
+set statusline+=%1*\ %<%F\                                "File+path
+set statusline+=%2*\ %y\                                  "FileType
+set statusline+=%3*\ %{fugitive#statusline()}\      
+set statusline+=%8*\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
+set statusline+=%9*\ col:%03c\                            "Colnr
+set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+
+hi User1 guifg=#ffdad8  guibg=#880c0e
+hi User2 guifg=#000000  guibg=#F4905C
+hi User3 guifg=#292b00  guibg=#f4f597
+hi User4 guifg=#112605  guibg=#aefe7B
+hi User5 guifg=#051d00  guibg=#7dcc7d
+hi User7 guifg=#ffffff  guibg=#880c0e gui=bold
+hi User8 guifg=#ffffff  guibg=#5b7fbb
+hi User9 guifg=#ffffff  guibg=#810085
+hi User0 guifg=#ffffff  guibg=#094afe
